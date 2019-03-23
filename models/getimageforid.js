@@ -5,7 +5,6 @@ exports.GetImage=function(id){
      if (err){
        console.error(err);
      }
-      console.log("Found the following records");
       console.log(data)
       resolve(data);
    
