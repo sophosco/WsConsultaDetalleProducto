@@ -1,3 +1,4 @@
+let getCatalogManager = require('../managers/GetCatalog_Manager');
 
 exports.GetCatalog = function (req, res) {
 
@@ -14,14 +15,16 @@ exports.GetCatalog = function (req, res) {
         },
         "responsePayload": {
             "result": false,
-            "Key": ""
+            "products": ""
         }
     };
 
-    response.responseHeader.status.code = 200;
-    response.responseHeader.status.description = "Key";
-    response.responsePayload.result = true;
-    response.responsePayload.Key = "Lista de Catalogo";
-    res.status(200).json(response);
+    getCatalogManager.GetCatalogModel(function (modelProducts) {         
+        response.responseHeader.status.code = 200;
+        response.responseHeader.status.description = "Key";
+        response.responsePayload.result = true;
+        response.responsePayload.products = modelProducts.products;
+        res.status(200).json(response);        
+    });    
 
 }
