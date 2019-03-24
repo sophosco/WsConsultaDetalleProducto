@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Set environment variables for dev
+export APP_ENV=${1:-dev}
+# Verify with unit tests (mocha)
+verifyMocha() {
+    { #try
+        echo "--> Verifying with unit test (mocha)"
+        ./node_modules/mocha/bin/mocha
+    } || { #catch
+        echo "--> Abort by verification with unit tests (mocha)"
+        exit 0
+    }
+}
+
+echo "--> Execution docker file with environment '$APP_ENV'"
+
+if [ "$APP_ENV" = "dev" ]; then
+        #Verify Mocha
+        verifyMocha
+        #Compile docker
+        docker build -t com.aval.services.products/products .
+        echo "--> Successful construction of the docker"
+elif [ "$APP_ENV" = "prod" ]; then
+        echo "--> It's not exist logic";
+else
+    echo "--> No compilation by environment variable assignment"
+fi
