@@ -17,7 +17,7 @@ exports.GetInventory = function (_Products) {
 
 
 exports.GetProduct = function (modelProducts, index, limit, _Product) {
-    invokeSyncProduct(modelProducts, index, limit, _Product);
+    invokeSyncProduct(modelProducts, index, limit, _Product);    
 }
 
 function invokeSyncProduct(modelProducts, index, limit, _Product) {
