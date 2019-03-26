@@ -1,7 +1,7 @@
 let productsAvalService = require('../services/ProductsAval_Service');
 
-exports.GetCatalogModel = function(_Products){
-    productsAvalService.GetInventory(function (modelProducts) { 
-        _Products(modelProducts);                         
+exports.GetCatalogModel = function(requestProducts, _Products){
+    productsAvalService.GetInventory(requestProducts, function (error, modelProducts) { 
+        _Products(error, modelProducts);                         
     });    
 }

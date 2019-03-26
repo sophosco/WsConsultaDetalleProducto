@@ -33,8 +33,8 @@ exports.GetBasicModel = function (inventory, _Products) {
             index++;
         }
         index = 0;
-        productsAvalService.GetProduct(modelProducts, index, limit, function (modelProducts) { 
-            _Products(modelProducts);                
+        productsAvalService.GetProduct(modelProducts, index, limit, function (error, modelProducts) { 
+            _Products(error, modelProducts);                
         });
     }
     

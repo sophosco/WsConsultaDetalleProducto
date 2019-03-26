@@ -1,23 +1,24 @@
-var Request = require("request");
+let Request = require("request");
 let getCatalogoModel = require('../models/GetCatalog_Model');
 
-exports.GetInventory = function (_Products) {
+exports.GetInventory = function (requestProducts, _Products) {
+
     Request.get({
         "headers": { "content-type": "application/json" },
         "url": "http://localhost:8080/v2/producto/inventory"
     }, (error, response, body) => {
         if (error) {
-            return console.dir("GetInventory: " + error);             
+            _Products(error, null);
         }
-        getCatalogoModel.GetBasicModel(JSON.parse(response.body), function (modelProducts) { 
-            _Products(modelProducts);                      
+        getCatalogoModel.GetBasicModel(JSON.parse(response.body), function (error, modelProducts) {
+            _Products(error, modelProducts);
         });
     });
+
 }
 
-
 exports.GetProduct = function (modelProducts, index, limit, _Product) {
-    invokeSyncProduct(modelProducts, index, limit, _Product);    
+    invokeSyncProduct(modelProducts, index, limit, _Product);
 }
 
 function invokeSyncProduct(modelProducts, index, limit, _Product) {
@@ -26,22 +27,24 @@ function invokeSyncProduct(modelProducts, index, limit, _Product) {
         "headers": { "content-type": "application/json" },
         "url": "http://localhost:8080/v2/producto/" + idProduct
     }, (error, response, body) => {
-        if (error) {
-            return console.dir("invokeSyncProduct: " + error);
-        }
-        _product = JSON.parse(response.body);
-        
-        modelProducts.products[index].description = _product.descripcion;
-        modelProducts.products[index].oldPrice = _product.precio;
-        modelProducts.products[index].availibilityCount = _product.cantidad_disponible;
-        modelProducts.products[index].categoryId = _product.categoria;
 
-        if (index < limit - 1) {            
+        if (error) {
+            _Product(error, null);
+        }
+
+        productDetail = JSON.parse(response.body);
+        modelProducts.products[index].description = productDetail.descripcion;
+        modelProducts.products[index].oldPrice = productDetail.precio;
+        modelProducts.products[index].availibilityCount = productDetail.cantidad_disponible;
+        modelProducts.products[index].categoryId = productDetail.categoria;
+
+        if (index < limit - 1) {
             index++;
             invokeSyncProduct(modelProducts, index, limit, _Product);
         } else {
-            _Product(modelProducts);
+            _Product(null, modelProducts);
         }
+
     });
 }
 

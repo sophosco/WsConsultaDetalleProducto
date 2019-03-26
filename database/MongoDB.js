@@ -7,13 +7,11 @@ let client = new MongoClient(url, { useNewUrlParser: true });
 
 
 exports.GetCollection = function (collection, cb) {
-  console.log("Entra MongoDB");
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("CatalogoDB");
     dbo.collection(collection).find().toArray(function (err, result) {
-      if (err) throw err;
-      console.log("REsultado: " + result);
+      if (err) throw err;     
       cb(err, result);
       db.close();
     });
