@@ -9,13 +9,14 @@ exports.GetProductDetail = function (product, cb) {
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
+        } else {
+            var productDetail = JSON.parse(response.body);
+            product.description = productDetail.descripcion;
+            product.oldPrice = productDetail.precio;
+            product.availibilityCount = productDetail.cantidad_disponible;
+            product.categoryId = productDetail.categoria;
+            cb(null, product);
         }
-        var productDetail = JSON.parse(response.body);
-        product.description = productDetail.descripcion;
-        product.oldPrice = productDetail.precio;
-        product.availibilityCount = productDetail.cantidad_disponible;
-        product.categoryId = productDetail.categoria;        
-        cb(null, product);
     });
 }
 
@@ -26,10 +27,11 @@ exports.GetInventory = function (requestProducts, _Products) {
     }, (error, response, body) => {
         if (error) {
             _Products(error, null);
-        }
-        getCatalogoModel.GetBasicModel(JSON.parse(response.body), function (error, modelProducts) {
-            _Products(error, modelProducts);
-        });
+        }else{
+            getCatalogoModel.GetBasicModel(JSON.parse(response.body), function (error, modelProducts) {
+                _Products(error, modelProducts);
+            });
+        }        
     });
 }
 
@@ -45,18 +47,19 @@ function invokeSyncProduct(modelProducts, index, limit, _Product) {
     }, (error, response, body) => {
         if (error) {
             _Product(error, null);
-        }
-        productDetail = JSON.parse(response.body);
-        modelProducts.products[index].description = productDetail.descripcion;
-        modelProducts.products[index].oldPrice = productDetail.precio;
-        modelProducts.products[index].availibilityCount = productDetail.cantidad_disponible;
-        modelProducts.products[index].categoryId = productDetail.categoria;
-        if (index < limit - 1) {
-            index++;
-            invokeSyncProduct(modelProducts, index, limit, _Product);
-        } else {
-            _Product(null, modelProducts);
-        }
+        }else{
+            productDetail = JSON.parse(response.body);
+            modelProducts.products[index].description = productDetail.descripcion;
+            modelProducts.products[index].oldPrice = productDetail.precio;
+            modelProducts.products[index].availibilityCount = productDetail.cantidad_disponible;
+            modelProducts.products[index].categoryId = productDetail.categoria;
+            if (index < limit - 1) {
+                index++;
+                invokeSyncProduct(modelProducts, index, limit, _Product);
+            } else {
+                _Product(null, modelProducts);
+            } 
+        }        
     });
 }
 
