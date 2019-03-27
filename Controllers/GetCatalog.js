@@ -1,15 +1,17 @@
 let getCatalogManager = require('../managers/GetCatalog_Manager');
-let GetSecurityManager = require('../managers/Security_Manager');
+let getSecurityManager = require('../managers/Security_Manager');
 let mongoDB = require('../database/MongoDB');
 
 exports.GetCatalog = function (req, res) {
 
     let requestProducts = {
+        "All": req.body.All,
         "CountProduct": req.body.CountProduct,
         "Availability": req.body.Availability,
         "NameCategory": req.body.NameCategory,
         "InitialRangePrice": req.body.InitialRangePrice,
-        "FinalRangePrice": req.body.FinalRangePrice
+        "FinalRangePrice": req.body.FinalRangePrice,
+          
     };
 
     let response = {
@@ -32,7 +34,7 @@ exports.GetCatalog = function (req, res) {
     let token = req.header("X-Session");
     let id = req.header("X-Channel");
 
-    GetSecurityManager.GetVerifyJwtToken(token, id, function (error, responseVerifyJwtToken) {
+    getSecurityManager.GetVerifyJwtToken(token, id, function (error, responseVerifyJwtToken) {
         if (error != null) {
             response.responseHeader.status.code = 500;
             response.responseHeader.status.description = error;
@@ -46,13 +48,13 @@ exports.GetCatalog = function (req, res) {
                 res.status(401).json(response);
             } else {
                 getCatalogManager.GetCatalogModel(requestProducts, function (error, modelProducts) {
-                    var collection = "ProductoDetalle";
                     if (error != null) {
                         response.responseHeader.status.code = 500;
                         response.responseHeader.status.description = error;
                         response.responsePayload.result = false;
                         res.status(500).json(response);
                     } else {
+                        var collection = "ProductoDetalle";
                         mongoDB.GetCollection(collection, function (err, productoDetalle) {
                             if (err) {
                                 response.responseHeader.status.code = 500;
@@ -74,14 +76,14 @@ exports.GetCatalog = function (req, res) {
                                         modelProducts.products[indexProductToUpdate].images.push(
                                             {
                                                 "small": "", /* Se deshabilita confomre los solicita front. -> productoDetalle[i].imagenDefaultPequena */
-                                                "medium": productoDetalle[i].imagenDefaultMediana,
+                                                "medium": productoDetalle[0].imagenDefaultMediana,
                                                 "big": "" /* Se deshabilita confomre los solicita front. -> roductoDetalle[i].imagenDefaultGrande */
                                             }
                                         );
                                     }
                                 }
                                 response.responseHeader.status.code = 200;
-                                response.responseHeader.status.description = "Key";
+                                response.responseHeader.status.description = "Transacción exitosa";
                                 response.responsePayload.result = true;
                                 response.responsePayload.products = modelProducts.products;
                                 res.status(200).json(response);
