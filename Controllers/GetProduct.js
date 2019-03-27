@@ -83,6 +83,10 @@ exports.GetProduct = function (req, res) {
                                             );
                                         }
                                         response.responsePayload.product = product;
+                                        res.setHeader(
+                                            "Access-Control-Allow-Origin", "*",
+                                            "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
+                                        );
                                         res.status(200).json(response);
                                     }
                                 });

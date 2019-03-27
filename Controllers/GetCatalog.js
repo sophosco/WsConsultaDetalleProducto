@@ -11,7 +11,7 @@ exports.GetCatalog = function (req, res) {
         "NameCategory": req.body.NameCategory,
         "InitialRangePrice": req.body.InitialRangePrice,
         "FinalRangePrice": req.body.FinalRangePrice,
-          
+
     };
 
     let response = {
@@ -86,6 +86,10 @@ exports.GetCatalog = function (req, res) {
                                 response.responseHeader.status.description = "Transacción exitosa";
                                 response.responsePayload.result = true;
                                 response.responsePayload.products = modelProducts.products;
+                                res.setHeader(
+                                    "Access-Control-Allow-Origin", "*",
+                                    "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
+                                );
                                 res.status(200).json(response);
                             }
                         });
