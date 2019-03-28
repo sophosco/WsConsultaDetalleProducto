@@ -84,7 +84,6 @@ exports.GetCatalog = function (req, res) {
                                         });
                                     }
                                 }
-
                                 response.responseHeader.status.code = 200;
                                 response.responseHeader.status.description = "Transacción exitosa";
                                 response.responsePayload.result = true;
@@ -116,9 +115,9 @@ exports.GetCatalog = function (req, res) {
                                                 modelProducts.products[indexProductToUpdate].categoryId = productoDetalle[i].categoria;
                                                 modelProducts.products[indexProductToUpdate].images.push(
                                                     {
-                                                        "small": "",
+                                                        "small": productoDetalle[0].imagenDefaultPequena,
                                                         "medium": productoDetalle[0].imagenDefaultMediana,
-                                                        "big": ""
+                                                        "big": productoDetalle[0].imagenDefaultGrande
                                                     }
                                                 );
                                             }
