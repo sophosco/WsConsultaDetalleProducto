@@ -25,7 +25,7 @@ exports.GetCatalog = function (req, res) {
 
     try {
         let requestProducts = {
-            "All": req.body.All,
+            "All": req.body.requestPayload.All,
             "CountProduct": req.body.requestPayload.CountProduct,
             "Availability": req.body.requestPayload.Availability,
             "NameCategory": req.body.requestPayload.NameCategory,
@@ -62,22 +62,29 @@ exports.GetCatalog = function (req, res) {
                         } else {
                             if (cache.get('products') != null) {
                                 var products = cache.get('products');
-                                if (requestProducts.Availability == true) {
-                                    products = products.filter(function (product) {
-                                        return (parseInt(product.availibilityCount) > 0);
-                                    });
+                                if (requestProducts.All != true) {
+                                    if (requestProducts.Availability == true) {
+                                        products = products.filter(function (product) {
+                                            return (parseInt(product.availibilityCount) > 0);
+                                        });
+                                    }
+                                    if (requestProducts.NameCategory != null) {
+                                        products = products.filter(function (product) {
+                                            return (product.categoryId == requestProducts.NameCategory);
+                                        });
+                                    }
+                                    if (requestProducts.InitialRangePrice != null) {
+                                        products = products.filter(function (product) {
+                                            return (parseInt(product.oldPrice) >= parseInt(requestProducts.InitialRangePrice));
+                                        });
+                                    }
+                                    if (requestProducts.FinalRangePrice != null) {
+                                        products = products.filter(function (product) {
+                                            return (parseInt(product.oldPrice) <= parseInt(requestProducts.FinalRangePrice));
+                                        });
+                                    }
                                 }
-                                if (requestProducts.NameCategory != null) {
-                                    products = products.filter(function (product) {
-                                        return (product.categoryId == requestProducts.NameCategory);
-                                    });
-                                }
-                                products = products.filter(function (product) {
-                                    return (parseInt(product.oldPrice) >= parseInt(requestProducts.InitialRangePrice));
-                                });
-                                products = products.filter(function (product) {
-                                    return (parseInt(product.oldPrice) <= parseInt(requestProducts.FinalRangePrice));
-                                });
+
                                 response.responseHeader.status.code = 200;
                                 response.responseHeader.status.description = "Transacción exitosa";
                                 response.responsePayload.result = true;
@@ -109,9 +116,9 @@ exports.GetCatalog = function (req, res) {
                                                 modelProducts.products[indexProductToUpdate].categoryId = productoDetalle[i].categoria;
                                                 modelProducts.products[indexProductToUpdate].images.push(
                                                     {
-                                                        "small": "", 
+                                                        "small": "",
                                                         "medium": productoDetalle[0].imagenDefaultMediana,
-                                                        "big": "" 
+                                                        "big": ""
                                                     }
                                                 );
                                             }

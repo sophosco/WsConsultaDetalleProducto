@@ -2,10 +2,9 @@ let Request = require("request");
 let getCatalogoModel = require('../models/GetCatalog_Model');
 
 exports.GetProductDetail = function (product, cb) {
-    console.log(product);
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:8080/v2/producto/" + product.id
+        "url": "http://" + process.env.SERVER_AVAL_SERVICE + ":" + process.env.PORT_AVAL_SERVICE + "/v2/producto/" + product.id
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
@@ -20,33 +19,33 @@ exports.GetProductDetail = function (product, cb) {
     });
 }
 
-exports.GetInventory = function (requestProducts, _Products) {
+exports.GetInventory = function (requestProducts, cb) {
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:8080/v2/producto/inventory"
+        "url": "http://" + process.env.SERVER_AVAL_SERVICE + ":" + process.env.PORT_AVAL_SERVICE +  "/v2/producto/inventory"
     }, (error, response, body) => {
         if (error) {
-            _Products(error, null);
+            cb(error, null);
         }else{
             getCatalogoModel.GetBasicModel(JSON.parse(response.body), function (error, modelProducts) {
-                _Products(error, modelProducts);
+                cb(error, modelProducts);
             });
         }        
     });
 }
 
-exports.GetProduct = function (modelProducts, index, limit, _Product) {
-    invokeSyncProduct(modelProducts, index, limit, _Product);
+exports.GetProduct = function (modelProducts, index, limit, cb) {
+    invokeSyncProduct(modelProducts, index, limit, cb);
 }
 
-function invokeSyncProduct(modelProducts, index, limit, _Product) {
+function invokeSyncProduct(modelProducts, index, limit, cb) {
     idProduct = modelProducts.products[index].id;
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://localhost:8080/v2/producto/" + idProduct
+        "url": "http://" + process.env.SERVER_AVAL_SERVICE + ":" + process.env.PORT_AVAL_SERVICE + "/v2/producto/" + idProduct
     }, (error, response, body) => {
         if (error) {
-            _Product(error, null);
+            cb(error, null);
         }else{
             productDetail = JSON.parse(response.body);
             modelProducts.products[index].description = productDetail.descripcion;
@@ -55,9 +54,9 @@ function invokeSyncProduct(modelProducts, index, limit, _Product) {
             modelProducts.products[index].categoryId = productDetail.categoria;
             if (index < limit - 1) {
                 index++;
-                invokeSyncProduct(modelProducts, index, limit, _Product);
+                invokeSyncProduct(modelProducts, index, limit, cb);
             } else {
-                _Product(null, modelProducts);
+                cb(null, modelProducts);
             } 
         }        
     });
