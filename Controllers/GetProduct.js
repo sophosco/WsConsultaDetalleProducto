@@ -2,15 +2,21 @@ let getProductManager = require('../managers/GetProduct_Manager');
 let getSecurityManager = require('../managers/Security_Manager');
 let mongoDB = require('../database/MongoDB');
 
-
 exports.GetProduct = function (req, res) {
 
     let productRequest = {
-        "id": req.body.id
+        "id": req.body.requestPayload.id
     };
 
     let token = req.header("X-Session");
     let id = req.header("X-Channel");
+
+    if(token == undefined){
+        token = req.body.requestHeader.session;        
+    }
+    if(id == undefined){
+        id = req.body.requestHeader.channel;
+    }
 
     let response = {
         "responseHeader": {
