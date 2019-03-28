@@ -6,11 +6,11 @@ exports.GetCatalog = function (req, res) {
 
     let requestProducts = {
         "All": req.body.All,
-        "CountProduct": req.body.CountProduct,
-        "Availability": req.body.Availability,
-        "NameCategory": req.body.NameCategory,
-        "InitialRangePrice": req.body.InitialRangePrice,
-        "FinalRangePrice": req.body.FinalRangePrice,
+        "CountProduct": req.body.requestPayload.CountProduct,
+        "Availability": req.body.requestPayload.Availability,
+        "NameCategory": req.body.requestPayload.NameCategory,
+        "InitialRangePrice": req.body.requestPayload.InitialRangePrice,
+        "FinalRangePrice": req.body.requestPayload.FinalRangePrice,
 
     };
 
@@ -34,9 +34,12 @@ exports.GetCatalog = function (req, res) {
     let token = req.header("X-Session");
     let id = req.header("X-Channel");
 
-    console.log(req);
-    console.log("token: " + token);
-    console.log("id: " + id);
+    if(token == undefined){
+        token = req.body.requestHeader.session;        
+    }
+    if(id == undefined){
+        id = req.body.requestHeader.channel;
+    }
 
     getSecurityManager.GetVerifyJwtToken(token, id, function (error, responseVerifyJwtToken) {
         if (error != null) {
