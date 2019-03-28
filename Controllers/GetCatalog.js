@@ -34,6 +34,10 @@ exports.GetCatalog = function (req, res) {
     let token = req.header("X-Session");
     let id = req.header("X-Channel");
 
+    console.log(req);
+    console.log("token: " + token);
+    console.log("id: " + id);
+
     getSecurityManager.GetVerifyJwtToken(token, id, function (error, responseVerifyJwtToken) {
         if (error != null) {
             response.responseHeader.status.code = 500;
