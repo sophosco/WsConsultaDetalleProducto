@@ -110,9 +110,15 @@ exports.GetCatalog = function (req, res) {
                                             });
                                             if (indexProductToUpdate != -1) {
                                                 modelProducts.products[indexProductToUpdate].ratingsValue = productoDetalle[i].calificacion;
+                                                modelProducts.products[indexProductToUpdate].ratingsCount = Math.random() * (5 - 1) + 1;
                                                 modelProducts.products[indexProductToUpdate].name = productoDetalle[i].informacionAdicional;
                                                 modelProducts.products[indexProductToUpdate].discount = productoDetalle[i].descuento;
                                                 modelProducts.products[indexProductToUpdate].categoryId = productoDetalle[i].categoria;
+                                                if (parseInt(productoDetalle[i].descuento) > 0) {
+                                                    modelProducts.products[indexProductToUpdate].newPrice = parseInt(modelProducts.products[indexProductToUpdate].oldPrice) - ((parseInt(productoDetalle[i].descuento) * parseInt(modelProducts.products[indexProductToUpdate].oldPrice)) / 100);
+                                                } else {
+                                                    modelProducts.products[indexProductToUpdate].newPrice = parseInt(modelProducts.products[indexProductToUpdate].oldPrice);
+                                                }
                                                 modelProducts.products[indexProductToUpdate].images.push(
                                                     {
                                                         "small": productoDetalle[0].imagenDefaultPequena,

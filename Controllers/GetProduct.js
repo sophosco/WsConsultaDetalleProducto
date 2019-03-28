@@ -66,8 +66,14 @@ exports.GetProduct = function (req, res) {
                                     res.status(500).json(response);
                                 } else {
                                     product.ratingsValue = result[0].calificacion;
+                                    product.ratingsCount = (Math.floor(Math.random() * (5 - 1)) + 1);
                                     product.name = result[0].informacionAdicional;
                                     product.discount = result[0].descuento;
+                                    if (parseInt(result[0].descuento) > 0) {
+                                        product.newPrice = parseInt(product.oldPrice) - ((parseInt(result[0].descuento) * parseInt(product.oldPrice)) / 100);
+                                    } else {
+                                        product.newPrice = parseInt(product.oldPrice);
+                                    }
                                     product.categoryId = result[0].categoria;
                                     collection = "Galeria";
                                     mongoDB.GetCollectionFilter(collection, filter, function (error, result) {
@@ -88,7 +94,18 @@ exports.GetProduct = function (req, res) {
                                                         "big": result[i].imagenGrande
                                                     }
                                                 );
-                                            }
+                                            };
+                                            product.color.push(                                            
+                                                "#" + (Math.floor(Math.random() * (9 - 1)) + 1) + "C" + (Math.floor(Math.random() * (9 - 1)) + 1) + "A" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0",
+                                                "#" + (Math.floor(Math.random() * (9 - 1)) + 1) + "B" + (Math.floor(Math.random() * (9 - 1)) + 1) + "B" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0",
+                                                "#" + (Math.floor(Math.random() * (9 - 1)) + 1 )+ "D" + (Math.floor(Math.random() * (9 - 1)) + 1) + "C" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0"
+                                            );
+                                            product.size.push( 
+                                                "S",
+                                                "M",
+                                                "L",
+                                                "XL"
+                                            );
                                             response.responsePayload.product = product;
                                             res.setHeader(
                                                 "Access-Control-Allow-Origin", "*",

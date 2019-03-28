@@ -49,7 +49,7 @@ function invokeSyncProduct(modelProducts, index, limit, cb) {
         }else{
             productDetail = JSON.parse(response.body);
             modelProducts.products[index].description = productDetail.descripcion;
-            modelProducts.products[index].oldPrice = productDetail.precio;
+            modelProducts.products[index].oldPrice = productDetail.precio;            
             modelProducts.products[index].availibilityCount = productDetail.cantidad_disponible;
             modelProducts.products[index].categoryId = productDetail.categoria;
             if (index < limit - 1) {
