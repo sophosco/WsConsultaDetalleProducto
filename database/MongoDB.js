@@ -11,7 +11,7 @@ exports.GetCollection = function (collection, cb) {
     if (err) throw err;
     var dbo = db.db("CatalogoDB");
     dbo.collection(collection).find().toArray(function (err, result) {
-      if (err) throw err;     
+      if (err) cb(err, null);;     
       cb(err, result);
       db.close();
     });
@@ -23,7 +23,7 @@ exports.GetCollectionFilter = function (collection, filter, cb) {
     if (err) throw err;
     var dbo = db.db("CatalogoDB");
     dbo.collection(collection).find(filter).toArray(function (err, result) {
-      if (err) throw err;     
+      if (err) cb(err, null);     
       cb(err, result);
       db.close();
     });

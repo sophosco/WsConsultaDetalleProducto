@@ -22,7 +22,7 @@ exports.GetProduct = function (req, res) {
     };
 
     try {
-        
+
         let productRequest = {
             "id": req.body.requestPayload.id
         };
@@ -83,9 +83,6 @@ exports.GetProduct = function (req, res) {
                                             response.responsePayload.result = false;
                                             res.status(500).json(response);
                                         } else {
-                                            response.responseHeader.status.code = 200;
-                                            response.responseHeader.status.description = "Transacción exitosa";
-                                            response.responsePayload.result = true;
                                             for (var i = 0; i < result.length; i++) {
                                                 product.images.push(
                                                     {
@@ -95,23 +92,50 @@ exports.GetProduct = function (req, res) {
                                                     }
                                                 );
                                             };
-                                            product.color.push(                                            
+                                            product.color.push(
                                                 "#" + (Math.floor(Math.random() * (9 - 1)) + 1) + "C" + (Math.floor(Math.random() * (9 - 1)) + 1) + "A" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0",
                                                 "#" + (Math.floor(Math.random() * (9 - 1)) + 1) + "B" + (Math.floor(Math.random() * (9 - 1)) + 1) + "B" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0",
-                                                "#" + (Math.floor(Math.random() * (9 - 1)) + 1 )+ "D" + (Math.floor(Math.random() * (9 - 1)) + 1) + "C" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0"
+                                                "#" + (Math.floor(Math.random() * (9 - 1)) + 1) + "D" + (Math.floor(Math.random() * (9 - 1)) + 1) + "C" + (Math.floor(Math.random() * (9 - 1)) + 1) + "0"
                                             );
-                                            product.size.push( 
+                                            product.size.push(
                                                 "S",
                                                 "M",
                                                 "L",
                                                 "XL"
                                             );
-                                            response.responsePayload.product = product;
-                                            res.setHeader(
-                                                "Access-Control-Allow-Origin", "*",
-                                                "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
-                                            );
-                                            res.status(200).json(response);
+                                            collection = "Calificaciones";
+                                            mongoDB.GetCollectionFilter(collection, filter, function (error, result) {
+                                                if (error != null) {
+                                                    response.responseHeader.status.code = 500;
+                                                    response.responseHeader.status.description = error;
+                                                    response.responsePayload.result = false;
+                                                    res.status(500).json(response);    
+                                                } else {                                                    
+                                                    for (var i = 0; i < result.length; i++) {
+                                                        product.comments.push(
+                                                            {
+                                                                "comment": result[i].comentario,
+                                                                "user": "User" + (Math.floor(Math.random() * (9 - 1)) + 1) + "" + (Math.floor(Math.random() * (9 - 1)) + 1),
+                                                                "creationDate": new Date().toISOString(),
+                                                                "rating": result[i].calificacion
+                                                              }
+                                                        );
+                                                    };
+
+                                                    product.detailDescription = "Detail Description";
+                                                    product.additionalInformation = "Additional Information";
+
+                                                    response.responseHeader.status.code = 200;
+                                                    response.responseHeader.status.description = "Transacción exitosa";
+                                                    response.responsePayload.result = true;
+                                                    response.responsePayload.product = product;
+                                                    res.setHeader(
+                                                        "Access-Control-Allow-Origin", "*",
+                                                        "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
+                                                    );
+                                                    res.status(200).json(response);
+                                                }
+                                            });
                                         }
                                     });
                                 }

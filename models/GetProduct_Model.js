@@ -10,6 +10,8 @@ exports.GetProductModel = function (productRequest, cb) {
         "ratingsCount": null,
         "ratingsValue": null,
         "description": "",
+        "detailDescription":"",
+        "additionalInformation":"",
         "availibilityCount": null,
         "cartCount": null,
         "comments": [],

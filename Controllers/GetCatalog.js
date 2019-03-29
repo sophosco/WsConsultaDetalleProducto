@@ -110,7 +110,7 @@ exports.GetCatalog = function (req, res) {
                                             });
                                             if (indexProductToUpdate != -1) {
                                                 modelProducts.products[indexProductToUpdate].ratingsValue = productoDetalle[i].calificacion;
-                                                modelProducts.products[indexProductToUpdate].ratingsCount = Math.random() * (5 - 1) + 1;
+                                                modelProducts.products[indexProductToUpdate].ratingsCount = Math.floor(Math.random() * (5 - 1) + 1);
                                                 modelProducts.products[indexProductToUpdate].name = productoDetalle[i].informacionAdicional;
                                                 modelProducts.products[indexProductToUpdate].discount = productoDetalle[i].descuento;
                                                 modelProducts.products[indexProductToUpdate].categoryId = productoDetalle[i].categoria;
