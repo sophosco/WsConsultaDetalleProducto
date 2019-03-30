@@ -6,7 +6,6 @@
 
 var app = require('../app');
 var debug = require('debug')('wsconsultadetalleproducto:server');
-var http = require('http');
 var https = require('https');
 var fs = require('fs');
 
@@ -18,29 +17,9 @@ if(process.env.APP_ENV || 'dev'){
 }
 
 /**
- * Get server an port of security service from environment.
- */
-if(process.env.SERVER_SECURITY_SERVICE == undefined){
-    process.env.SERVER_SECURITY_SERVICE = "ec2-3-17-205-42.us-east-2.compute.amazonaws.com";
-}
-if(process.env.PORT_SECURITY_SERVICE == undefined){
-    process.env.PORT_SECURITY_SERVICE = "9443";
-}
-
-/**
- * Get server an port of Aval PoC service from environment.
- */
-if(process.env.SERVER_AVAL_SERVICE == undefined){
-  process.env.SERVER_AVAL_SERVICE = "localhost";
-}
-if(process.env.PORT_AVAL_SERVICE == undefined){
-  process.env.PORT_AVAL_SERVICE = "8080";
-}
-
-/**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(process.env.PORT || '8443');
+var port = normalizePort(process.env.POC_SERVICE_CATALOG_PORT || '8443');
 app.set('port', port);
 
 /**

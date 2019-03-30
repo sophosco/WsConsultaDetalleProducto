@@ -1,10 +1,11 @@
 let Request = require("request");
 let getCatalogoModel = require('../models/GetCatalog_Model');
+let config = require('../config/Env');
 
 exports.GetProductDetail = function (product, cb) {
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + process.env.SERVER_AVAL_SERVICE + ":" + process.env.PORT_AVAL_SERVICE + "/v2/producto/" + product.id
+        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort + "/v2/producto/" + product.id
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
@@ -22,7 +23,7 @@ exports.GetProductDetail = function (product, cb) {
 exports.GetInventory = function (requestProducts, cb) {
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + process.env.SERVER_AVAL_SERVICE + ":" + process.env.PORT_AVAL_SERVICE +  "/v2/producto/inventory"
+        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort +  "/v2/producto/inventory"
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
@@ -42,7 +43,7 @@ function invokeSyncProduct(modelProducts, index, limit, cb) {
     idProduct = modelProducts.products[index].id;
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + process.env.SERVER_AVAL_SERVICE + ":" + process.env.PORT_AVAL_SERVICE + "/v2/producto/" + idProduct
+        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort + "/v2/producto/" + idProduct
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
