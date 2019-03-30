@@ -8,10 +8,10 @@ let client = new mongoClient(url, { useNewUrlParser: true });
 
 exports.GetCollection = function (collection, cb) {
   mongoClient.connect(url, function (err, db) {
-    if (err) throw err;
+    if (err) cb(err, null);  
     var dbo = db.db("CatalogoDB");
     dbo.collection(collection).find().toArray(function (err, result) {
-      if (err) cb(err, null);;     
+      if (err) cb(err, null);     
       cb(err, result);
       db.close();
     });
@@ -20,7 +20,7 @@ exports.GetCollection = function (collection, cb) {
 
 exports.GetCollectionFilter = function (collection, filter, cb) {
   mongoClient.connect(url, function (err, db) {
-    if (err) throw err;
+    if (err) cb(err, null);   
     var dbo = db.db("CatalogoDB");
     dbo.collection(collection).find(filter).toArray(function (err, result) {
       if (err) cb(err, null);     
