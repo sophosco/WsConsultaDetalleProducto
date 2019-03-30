@@ -77,7 +77,6 @@ exports.GetProduct = function (req, res) {
                                         response.responsePayload.result = false;
                                         res.status(500).json(response);
                                     } else {
-                                        console.log(result[0]);
                                         product.ratingsValue = result[0].calificacion;
                                         product.ratingsCount = (Math.floor(Math.random() * (5 - 1)) + 1);
                                         product.name = result[0].informacionAdicional;
