@@ -60,9 +60,6 @@ podTemplate(
         }//maven
 
         container('docker') {
-            stage('Build app') {
-                sh 'bin/Dockerfile.dev'
-            }
             stage('Create image') {
                 docker.withRegistry("$REGISTRY_URL", "ecr:us-east-2:aws") {
                     image = docker.build("$IMAGETAG")
