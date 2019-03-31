@@ -45,9 +45,8 @@ podTemplate(
         }
         
         container('node') {
-            stage('Build app') {
+            stage('Install dependencies') {
                 sh 'npm install'
-                sh 'bin/Dockerfile.dev'
             }
             stage('Scann Code') {
                 def scannerHome = tool 'SonarScanner';
@@ -59,6 +58,9 @@ podTemplate(
         }//maven
 
         container('docker') {
+            stage('Build app') {
+                sh 'bin/Dockerfile.dev'
+            }
             stage('Create image') {
                 docker.withRegistry("$REGISTRY_URL", "ecr:us-east-2:aws") {
                     image = docker.build("$IMAGETAG")
