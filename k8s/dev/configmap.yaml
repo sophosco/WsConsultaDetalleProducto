@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wsrestproducto-configmap
+  namespace: dev
+data:
+  POC_SERVICE_INVENTORY_HOST: 'wsrestgestioncarrito'
+  POC_SERVICE_INVENTORY_PORT: '8080'
+  POC_SERVICE_SECURITY_HOST: 'wsrestsecurity'
+  POC_SERVICE_SECURITY_PORT: '8080'
+  POC_SERVICE_AUDIT_HOST: 'wsrestauditoriaapi'
+  POC_SERVICE_AUDIT_PORT: '18082'
