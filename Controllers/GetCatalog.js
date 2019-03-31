@@ -121,9 +121,9 @@ exports.GetCatalog = function (req, res) {
                                                 }
                                                 modelProducts.products[indexProductToUpdate].images.push(
                                                     {
-                                                        "small": productoDetalle[0].imagenDefaultPequena,
-                                                        "medium": productoDetalle[0].imagenDefaultMediana,
-                                                        "big": productoDetalle[0].imagenDefaultGrande
+                                                        "small": productoDetalle[i].imagenDefaultPequena,
+                                                        "medium": productoDetalle[i].imagenDefaultMediana,
+                                                        "big": productoDetalle[i].imagenDefaultGrande
                                                     }
                                                 );
                                             }
