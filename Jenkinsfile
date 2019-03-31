@@ -47,7 +47,7 @@ podTemplate(
         container('node') {
             stage('Build app') {
                 sh 'npm install'
-                sh 'bin/Dockerfile.dev
+                sh 'bin/Dockerfile.dev'
             }
             stage('Scann Code') {
                 def scannerHome = tool 'SonarScanner';
