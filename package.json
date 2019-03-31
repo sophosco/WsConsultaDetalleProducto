@@ -1,11 +1,11 @@
 {
-  "name": "wsconsultadetalleproducto",
+  "name": "wsrestproducto",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "eslint": "./node_modules/eslint/bin/eslint.js . --ext .js",
-    "build-docker": "sh ./bin/Dockerfile.dev",
+    "test": "mocha",
+    "eslint": "./node_modules/eslint/bin/eslint.js . --ext .js",    
     "run-docker": "docker run -p 3010:3010 -d com.aval.services.products/products"
   },
   "dependencies": {
