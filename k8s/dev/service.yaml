@@ -6,7 +6,7 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 3000
+      port: 3010
   type: LoadBalancer    
   selector:
     app: wsrestproducto
