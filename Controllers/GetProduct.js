@@ -54,7 +54,7 @@ exports.GetProduct = function (req, res) {
                         response.responseHeader.status.code = 200;
                         response.responseHeader.status.description = "Transacción exitosa";
                         response.responsePayload.result = true;
-                        response.responsePayload.products = cache.get('product' + productRequest.id);
+                        response.responsePayload.product = cache.get('product' + productRequest.id);
                         res.setHeader(
                             "Access-Control-Allow-Origin", "*",
                             "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
