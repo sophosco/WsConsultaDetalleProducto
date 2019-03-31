@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:8.12.0
+FROM node/alpine-node:8.12.0
 # Create app directory
 WORKDIR /usr/src/app
 # Install app dependencies
@@ -11,5 +11,5 @@ RUN npm install
 # Bundle app source
 
 COPY . .
-EXPOSE 8443
+EXPOSE 3010
 CMD npm start
