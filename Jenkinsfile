@@ -14,7 +14,9 @@ podTemplate(
         containerTemplate(
             name: 'node',
             image: 'node:8.12.0-alpine',
+            workingDir: '/home/jenkins',
             ttyEnabled: true,
+            privileged: true,
             command: 'cat'
         ),
         containerTemplate(
@@ -51,7 +53,7 @@ podTemplate(
             stage('Scann Code') {
                 def scannerHome = tool 'SonarScanner';
                 withSonarQubeEnv('SonarQube') {
-                    sh "env.PATH = ${scannerHome}/bin/sonar-scanner:${env.PATH}"
+                    sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
 
