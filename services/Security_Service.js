@@ -2,6 +2,8 @@ let Request = require("request");
 let config = require('../config/Env');
 
 exports.VerifyJwtToken = function (requestVerifyJwtToken, cb) {
+    console.log("Configuracion: " + config.securityHost + " " + config.securityPort);
+    
     Request.post({
         "headers": { "content-type": "application/json" },
         "url": "http://" + config.securityHost + ":" +config.securityPort + "/services/security/verifyJwtToken/",        
