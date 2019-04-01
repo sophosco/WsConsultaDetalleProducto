@@ -1,7 +1,7 @@
 let cache = require('memory-cache');
-
 let getCatalogManager = require('../managers/GetCatalog_Manager');
 let getSecurityManager = require('../managers/Security_Manager');
+let auditService = require('../services/Audit_Service');
 let mongoDB = require('../database/MongoDB');
 
 exports.GetCatalog = function (req, res) {
@@ -32,8 +32,12 @@ exports.GetCatalog = function (req, res) {
             "InitialRangePrice": req.body.requestPayload.InitialRangePrice,
             "FinalRangePrice": req.body.requestPayload.FinalRangePrice
         };
+        
         let token = req.header("X-Session");
         let id = req.header("X-Channel");
+        let ip = req.header("X-IPAddr");
+        let uuid = req.header("X-RqUID");       
+
         if (token == undefined) {
             token = req.body.requestHeader.session;
         }
@@ -53,6 +57,7 @@ exports.GetCatalog = function (req, res) {
                     response.responsePayload.result = false;
                     res.status(401).json(response);
                 } else {
+                    auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarCatalogo", "Consultar", new Buffer(JSON.stringify(requestProducts)).toString('base64'));
                     getCatalogManager.GetCatalogModel(requestProducts, function (error, modelProducts) {
                         if (error != null) {
                             response.responseHeader.status.code = 500;
@@ -121,9 +126,9 @@ exports.GetCatalog = function (req, res) {
                                                 }
                                                 modelProducts.products[indexProductToUpdate].images.push(
                                                     {
-                                                        "small": productoDetalle[0].imagenDefaultPequena,
-                                                        "medium": productoDetalle[0].imagenDefaultMediana,
-                                                        "big": productoDetalle[0].imagenDefaultGrande
+                                                        "small": productoDetalle[i].imagenDefaultPequena,
+                                                        "medium": productoDetalle[i].imagenDefaultMediana,
+                                                        "big": productoDetalle[i].imagenDefaultGrande
                                                     }
                                                 );
                                             }

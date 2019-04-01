@@ -1,3 +1,4 @@
+let auditService = require('../services/Audit_Service');
 let getProductManager = require('../managers/GetProduct_Manager');
 let getSecurityManager = require('../managers/Security_Manager');
 let mongoDB = require('../database/MongoDB');
@@ -29,6 +30,8 @@ exports.GetProduct = function (req, res) {
         };
         let token = req.header("X-Session");
         let id = req.header("X-Channel");
+        let ip = req.header("X-IPAddr");
+        let uuid = req.header("X-RqUID");  
 
         if (token == undefined) {
             token = req.body.requestHeader.session;
@@ -54,13 +57,14 @@ exports.GetProduct = function (req, res) {
                         response.responseHeader.status.code = 200;
                         response.responseHeader.status.description = "Transacción exitosa";
                         response.responsePayload.result = true;
-                        response.responsePayload.products = cache.get('product' + productRequest.id);
+                        response.responsePayload.product = cache.get('product' + productRequest.id);
                         res.setHeader(
                             "Access-Control-Allow-Origin", "*",
                             "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
                         );
                         res.status(200).json(response);
                     } else {
+                        auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarDetalleProducto", "Consultar", new Buffer(JSON.stringify(productRequest)).toString('base64'));
                         getProductManager.GetProductManager(productRequest, function (error, product) {
                             if (error != null) {
                                 response.responseHeader.status.code = 500;

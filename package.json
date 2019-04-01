@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha",
+    "test": "mocha ./test/router.js",
     "eslint": "./node_modules/eslint/bin/eslint.js . --ext .js",    
     "run-docker": "docker run -p 3010:3010 -d com.aval.services.products/products"
   },
