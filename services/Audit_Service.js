@@ -1,7 +1,7 @@
 let Request = require("request");
 let config = require('../config/Env');
 
-exports.Add = function (rqUID, ipAddr, channel, sesion, categoria, producto, moduloAplicacion, tipoAccion, data) {
+exports.Add = function (rqUID, ipAddr, channel, token, categoria, producto, moduloAplicacion, tipoAccion, data) {
     
     var requestAddAudit = {
         "FechaCreacion": new Date().toISOString(),      
@@ -21,7 +21,7 @@ exports.Add = function (rqUID, ipAddr, channel, sesion, categoria, producto, mod
             "X-RqUID": rqUID,
             "X-IPAddr": ipAddr,
             "X-Channel": channel,
-            "X-Sesion": sesion,
+            "X-Sesion": token,
             "X-haveToken": true
      },
         "url": "http://" + config.auditHost + ":" +config.auditPort + "/api/actividad/add/",        
