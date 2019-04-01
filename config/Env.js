@@ -1,7 +1,7 @@
 'use strict';
 
 const env = {
-    securityHost: process.env.POC_SERVICE_SECURITY_HOST || "localhost",
+    securityHost: process.env.POC_SERVICE_SECURITY_HOST || "aaa01c7ec542511e9a81b0666116d3a5-63920683.us-east-2.elb.amazonaws.com",
     securityPort: process.env.POC_SERVICE_SECURITY_PORT || "3000",
     inventoryHost: process.env.POC_SERVICE_INVENTORY_HOST || "ec2-3-17-205-42.us-east-2.compute.amazonaws.com",
     inventoryPort: process.env.POC_SERVICE_INVENTORY_PORT || "3020",
