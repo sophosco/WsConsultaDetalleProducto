@@ -64,7 +64,7 @@ exports.GetProduct = function (req, res) {
                         );
                         res.status(200).json(response);
                     } else {
-                        auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarDetalleProducto", "Consultar", new Buffer(JSON.stringify(productRequest)).toString('base64'));
+                        auditService.Add(uuid, ip, id, token, null, null, "ConsultarDetalleProducto", "Consultar", new Buffer(JSON.stringify(productRequest)).toString('base64'));
                         getProductManager.GetProductManager(productRequest, function (error, product) {
                             if (error != null) {
                                 response.responseHeader.status.code = 500;
