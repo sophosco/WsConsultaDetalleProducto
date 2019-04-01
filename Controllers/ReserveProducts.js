@@ -58,9 +58,7 @@ exports.ReserveProducts = function (req, res) {
                             }
                         );
                     };
-
-                    auditService.Add(uuid, ip, id, uuid, null, null, "ReservarProductos", "Reservar", new Buffer(JSON.stringify(productsToReserve)).toString('base64'));                        
-
+                    auditService.Add(uuid, ip, id, token, null, null, "ReservarProductos", "Reservar", new Buffer(JSON.stringify(productsToReserve)).toString('base64'));                        
                     reserveProductsManager.ReserveProductManager(productsToReserve, function (error, product) {
                         if (error != null) {
                             response.responseHeader.status.code = 206;
