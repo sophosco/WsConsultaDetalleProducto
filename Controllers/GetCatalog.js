@@ -58,7 +58,7 @@ exports.GetCatalog = function (req, res) {
                     response.responsePayload.result = false;
                     res.status(401).json(response);
                 } else {
-                    //auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarCatalogo", "Consultar", new Buffer(JSON.stringify(requestProducts)).toString('base64'));
+                    auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarCatalogo", "Consultar", new Buffer(JSON.stringify(requestProducts)).toString('base64'));
                     console.log("GetCatalogModel");
                     getCatalogManager.GetCatalogModel(requestProducts, function (error, modelProducts) {
                         if (error != null) {
