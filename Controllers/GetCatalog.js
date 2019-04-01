@@ -44,7 +44,6 @@ exports.GetCatalog = function (req, res) {
         if (id == undefined) {
             id = req.body.requestHeader.channel;
         }
-        console.log("GetVerifyJwtToken");
         getSecurityManager.GetVerifyJwtToken(token, id, function (error, responseVerifyJwtToken) {
             if (error != null) {
                 response.responseHeader.status.code = 500;
@@ -58,8 +57,7 @@ exports.GetCatalog = function (req, res) {
                     response.responsePayload.result = false;
                     res.status(401).json(response);
                 } else {
-                    auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarCatalogo", "Consultar", new Buffer(JSON.stringify(requestProducts)).toString('base64'));
-                    console.log("GetCatalogModel");
+                    auditService.Add(uuid, ip, id, token, null, null, "ConsultarCatalogo", "Consultar", new Buffer(JSON.stringify(requestProducts)).toString('base64'));
                     getCatalogManager.GetCatalogModel(requestProducts, function (error, modelProducts) {
                         if (error != null) {
                             response.responseHeader.status.code = 500;
@@ -68,7 +66,6 @@ exports.GetCatalog = function (req, res) {
                             res.status(500).json(response);
                         } else {
                             if (cache.get('products') != null) {
-                                console.log("Cache GetCollection");
                                 var products = cache.get('products');
                                 if (requestProducts.All != true) {
                                     if (requestProducts.Availability == true) {
@@ -103,7 +100,6 @@ exports.GetCatalog = function (req, res) {
                                 res.status(200).json(response);
                             } else {
                                 var collection = "ProductoDetalle";
-                                console.log("GetCollection");
                                 mongoDB.GetCollection(collection, function (err, productoDetalle) {
                                     if (err) {
                                         response.responseHeader.status.code = 500;
