@@ -1,3 +1,4 @@
+let auditService = require('../services/Audit_Service');
 let getSecurityManager = require('../managers/Security_Manager');
 let reserveProductsManager = require('../managers/ReserveProducts_Manager');
 
@@ -21,9 +22,13 @@ exports.ReserveProducts = function (req, res) {
     let productsToReserve = {
         "products":[]
     };
-    try {        
+    try {     
+
         let token = req.header("X-Session");
         let id = req.header("X-Channel");
+        let ip = req.header("X-IPAddr");
+        let uuid = req.header("X-RqUID");  
+
         if (token == undefined) {
             token = req.body.requestHeader.session;
         }
@@ -53,6 +58,9 @@ exports.ReserveProducts = function (req, res) {
                             }
                         );
                     };
+
+                    auditService.Add(uuid, ip, id, uuid, null, null, "ReservarProductos", "Reservar", new Buffer(JSON.stringify(productsToReserve)).toString('base64'));                        
+
                     reserveProductsManager.ReserveProductManager(productsToReserve, function (error, product) {
                         if (error != null) {
                             response.responseHeader.status.code = 206;

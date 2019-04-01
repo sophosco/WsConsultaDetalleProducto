@@ -1,3 +1,4 @@
+let auditService = require('../services/Audit_Service');
 let getProductManager = require('../managers/GetProduct_Manager');
 let getSecurityManager = require('../managers/Security_Manager');
 let mongoDB = require('../database/MongoDB');
@@ -29,6 +30,8 @@ exports.GetProduct = function (req, res) {
         };
         let token = req.header("X-Session");
         let id = req.header("X-Channel");
+        let ip = req.header("X-IPAddr");
+        let uuid = req.header("X-RqUID");  
 
         if (token == undefined) {
             token = req.body.requestHeader.session;
@@ -61,6 +64,7 @@ exports.GetProduct = function (req, res) {
                         );
                         res.status(200).json(response);
                     } else {
+                        auditService.Add(uuid, ip, id, uuid, null, null, "ConsultarDetalleProducto", "Consultar", new Buffer(JSON.stringify(productRequest)).toString('base64'));
                         getProductManager.GetProductManager(productRequest, function (error, product) {
                             if (error != null) {
                                 response.responseHeader.status.code = 500;
