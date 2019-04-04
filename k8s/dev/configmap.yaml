@@ -12,5 +12,5 @@ data:
   POC_SERVICE_AUDIT_PORT: '18082'
   POC_MONGO_HOST : 'mongodb'
   POC_MONGO_PORT : '27017'
-  POC_MONGO_USER : 'root'
-  POC_MONGO_PASS : 'j98IiwmnGf'
+  POC_MONGO_USER : 'MongoDBUser'
+  POC_MONGO_PASS : 'MongoDBUser'
