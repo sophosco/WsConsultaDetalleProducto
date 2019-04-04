@@ -40,7 +40,7 @@ podTemplate(
         def REGISTRY_URL = "https://887482798966.dkr.ecr.us-east-2.amazonaws.com"
         def IMAGEVERSION = "beta"
         def NAMESPACE    = 'dev'
-        def IMAGETAG     = "$PROJECT/$SERVICENAME:$IMAGEVERSION"
+        def IMAGETAG     = "$PROJECT/$SERVICENAME:$IMAGEVERSION${env.BUILD_NUMBER}"
 
         stage('Checkout code') {
             checkout scm
@@ -76,6 +76,7 @@ podTemplate(
                 sh "kubectl get ns $NAMESPACE || kubectl create ns $NAMESPACE"
                 sh "kubectl get pods --namespace $NAMESPACE"
                 sh "sed -i.bak 's#$PROJECT/$SERVICENAME:$IMAGEVERSION#$IMAGETAG#' ./k8s/dev/*.yaml"
+                sh "kubectl --namespace=$NAMESPACE delete configmap $SERVICENAME-configmap"
                 sh "kubectl --namespace=$NAMESPACE apply -f k8s/dev/configmap.yaml"
                 sh "kubectl --namespace=$NAMESPACE apply -f k8s/dev/deployment.yaml"
                 sh "kubectl --namespace=$NAMESPACE apply -f k8s/dev/service.yaml"
