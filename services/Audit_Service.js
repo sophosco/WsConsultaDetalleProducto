@@ -29,8 +29,6 @@ exports.Add = function (rqUID, ipAddr, channel, token, categoria, producto, modu
     }, (error, response, body) => {
         if (error) {
             console.log("error: " + error);
-        }else{
-            console.log("response: " + JSON.stringify(response));
-        }        
+        }       
     });
 };
