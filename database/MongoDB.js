@@ -3,7 +3,8 @@
 let config = require('../config/Env');
 
 let mongoClient = require('mongodb').MongoClient;
-let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/test?retryWrites=true";
+//let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/test?retryWrites=true";
+let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/"+config.mongoDB+"?retryWrites=true";
 let client = new mongoClient(url, { useNewUrlParser: true });
 
 exports.GetCollection = function (collection, cb) {
