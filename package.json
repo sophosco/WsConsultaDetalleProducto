@@ -1,11 +1,11 @@
 {
-  "name": "wsconsultadetalleproducto",
+  "name": "wsrestproducto",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "test": "mocha ./test/router.js",
     "eslint": "./node_modules/eslint/bin/eslint.js . --ext .js",
-    "build-docker": "sh ./bin/Dockerfile.dev",
     "run-docker": "docker run -p 3010:3010 -d com.aval.services.products/products"
   },
   "dependencies": {
@@ -13,10 +13,12 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "memory-cache": "^0.2.0",
     "mongodb": "^3.2.2",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "update": "^0.7.4"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

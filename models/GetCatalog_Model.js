@@ -1,6 +1,6 @@
 let productsAvalService = require('../services/ProductsAval_Service');
 
-exports.GetBasicModel = function (inventory, _Products) {
+exports.GetBasicModel = function (inventory, cb) {
 
     let modelProducts = {
         "products": []
@@ -34,7 +34,7 @@ exports.GetBasicModel = function (inventory, _Products) {
         }
         index = 0;
         productsAvalService.GetProduct(modelProducts, index, limit, function (error, modelProducts) { 
-            _Products(error, modelProducts);                
+            cb(error, modelProducts);                
         });
     }
     

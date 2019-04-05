@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wsrestproducto
+  namespace: dev
+spec:
+  ports:
+    - name: http
+      port: 3010
+    - name: https
+      port: 443  
+  type: LoadBalancer    
+  selector:
+    app: wsrestproducto
