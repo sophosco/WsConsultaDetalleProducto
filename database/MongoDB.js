@@ -7,6 +7,7 @@ let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.
 let client = new mongoClient(url, { useNewUrlParser: true });
 
 exports.GetCollection = function (collection, cb) {
+  console.log("Mongo: " + url);
   mongoClient.connect(url, function (err, db) {
     if (err) cb(err, null);  
     var dbo = db.db("CatalogoDB");
