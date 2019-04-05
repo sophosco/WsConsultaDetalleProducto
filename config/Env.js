@@ -11,7 +11,7 @@ const env = {
     mongoDBPort: process.env.POC_MONGO_PORT || "27017",
     mongoDBUser: process.env.POC_MONGO_USER || "MongoDBUser",
     mongoDBPass: process.env.POC_MONGO_PASS || "MongoDBUser",
-    mongoDB: process.env.POC_MONGO_PASS || "CatalogoDB"
+    mongoDB: process.env.POC_MONGO_DB || "CatalogoDB"
 };
 
 module.exports = env;
