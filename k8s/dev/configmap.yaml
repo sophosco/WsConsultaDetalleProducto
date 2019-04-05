@@ -14,3 +14,4 @@ data:
   POC_MONGO_PORT : '27017'
   POC_MONGO_USER : 'MongoDBUser'
   POC_MONGO_PASS : 'MongoDBUser'
+  POC_MONGO_DB : 'CatalogoDB'
