@@ -5,7 +5,7 @@ let config = require('../config/Env');
 let mongoClient = require('mongodb').MongoClient;
 //let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/test?retryWrites=true";
 //let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/"+config.mongoDB+"?retryWrites=true";
-let url = "mongodb+srv://MongoDBUser:MongoDBUser@127.0.0.1/CatalogoDB?retryWrites=true";
+let url = "mongodb+srv://MongoDBUser:MongoDBUser@127.0.0.1:27017/CatalogoDB";
 let client = new mongoClient(url, { useNewUrlParser: true });
 
 exports.GetCollection = function (collection, cb) {
