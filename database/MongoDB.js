@@ -4,8 +4,8 @@ let config = require('../config/Env');
 
 let mongoClient = require('mongodb').MongoClient;
 //let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/test?retryWrites=true";
-//let url = "mongodb+srv://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+"/"+config.mongoDB+"?retryWrites=true";
-let url = "mongodb://MongoDBUser:MongoDBUser@172.20.225.242:27017/CatalogoDB";
+let url = "mongodb://"+config.mongoDBUser+":"+config.mongoDBPass+"@"+config.mongoDBHost+":"+config.mongoDBPort"/"+config.mongoDB;
+//let url = "mongodb://MongoDBUser:MongoDBUser@172.20.225.242:27017/CatalogoDB";
 let client = new mongoClient(url, { useNewUrlParser: true });
 
 exports.GetCollection = function (collection, cb) {
