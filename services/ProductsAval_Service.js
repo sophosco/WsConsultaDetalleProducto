@@ -23,7 +23,7 @@ exports.GetProductDetail = function (product, cb) {
 exports.GetInventory = function (requestProducts, cb) {
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort +  "/v2/producto/inventory"
+        "url": "https://" + config.inventoryHost + ":" + config.inventoryPort +  "/v2/producto/inventory"
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
