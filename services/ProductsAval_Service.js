@@ -25,6 +25,8 @@ exports.GetInventory = function (requestProducts, cb) {
         "headers": { "content-type": "application/json" },
         "url": "https://" + config.inventoryHost + ":" + config.inventoryPort +  "/v2/producto/inventory"
     }, (error, response, body) => {
+        console.log(error);
+        console.log(response);
         if (error) {
             cb(error, null);
         }else{
