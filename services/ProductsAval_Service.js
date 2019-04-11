@@ -5,7 +5,7 @@ let config = require('../config/Env');
 exports.GetProductDetail = function (product, cb) {
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort + "/v2/producto/" + product.id
+        "url": "https://" + config.inventoryHost + ":" + config.inventoryPort + "/v2/producto/" + product.id
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
@@ -23,8 +23,10 @@ exports.GetProductDetail = function (product, cb) {
 exports.GetInventory = function (requestProducts, cb) {
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort +  "/v2/producto/inventory"
+        "url": "https://" + config.inventoryHost + ":" + config.inventoryPort +  "/v2/producto/inventory"
     }, (error, response, body) => {
+        console.log(error);
+        console.log(response);
         if (error) {
             cb(error, null);
         }else{
@@ -43,7 +45,7 @@ function invokeSyncProduct(modelProducts, index, limit, cb) {
     idProduct = modelProducts.products[index].id;
     Request.get({
         "headers": { "content-type": "application/json" },
-        "url": "http://" + config.inventoryHost + ":" + config.inventoryPort + "/v2/producto/" + idProduct
+        "url": "https://" + config.inventoryHost + ":" + config.inventoryPort + "/v2/producto/" + idProduct
     }, (error, response, body) => {
         if (error) {
             cb(error, null);
