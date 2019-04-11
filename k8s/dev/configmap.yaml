@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 data:
   POC_SERVICE_INVENTORY_HOST: 'ec2-3-17-205-42.us-east-2.compute.amazonaws.com'
-  POC_SERVICE_INVENTORY_PORT: '3020'
+  POC_SERVICE_INVENTORY_PORT: '9443'
   POC_SERVICE_SECURITY_HOST: 'wsrestsecurity'
   POC_SERVICE_SECURITY_PORT: '3000'
   POC_SERVICE_AUDIT_HOST: 'wsrestauditoriaapi'
