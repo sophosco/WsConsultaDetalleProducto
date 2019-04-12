@@ -46,16 +46,17 @@ podTemplate(
             checkout scm
         }
         
-        def scannerHome = tool 'SonarScanner';
-        withSonarQubeEnv('SonarQube') {
-            container('node') {
-                stage('Install dependencies') {
-                    sh 'npm install'
-                }
-                stage('Scann code') {
-                    sh "${scannerHome}/bin/sonar-scanner"  
-                }
-            }//node
+        container('node') {
+            stage('Install dependencies') {
+                sh 'npm install'
+            }
+        }//node
+
+        stage('Scann code') {
+            def scannerHome = tool 'SonarScanner';
+            withSonarQubeEnv('SonarQube') {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
         }
 
         container('docker') {
