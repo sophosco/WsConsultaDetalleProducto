@@ -52,7 +52,6 @@ podTemplate(
             }
             stage('Test app'){
                 sh 'npm test'
-                junit '**/TEST-*.xml'
             }
         }//node
 
