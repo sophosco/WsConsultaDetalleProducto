@@ -51,7 +51,7 @@ describe("Routing express - state services (UP)", () => {
         };
         try {
             chai.request(app).post('/api/products/catalog/').set('content-type', 'application/json').send(body).end(res => {
-                res.should.have.status(500);
+                res.should.have.status(401);
                 done();
             });
         } catch (error) {
@@ -82,7 +82,7 @@ describe("Routing express - state services (UP)", () => {
         };
         try {
             chai.request(app).post('/api/products/product/').set('content-type', 'application/json').send(body).end(res => {
-                res.should.have.status(500);
+                res.should.have.status(401);
                 done();
             });
         } catch (error) {
@@ -126,7 +126,7 @@ describe("Routing express - state services (UP)", () => {
         };
         try {
             chai.request(app).post('/api/products/reserve/').set('content-type', 'application/json').send(body).end(res => {
-                res.should.have.status(500);
+                res.should.have.status(401);
                 done();
             });
         } catch (error) {
